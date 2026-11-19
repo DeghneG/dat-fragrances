@@ -1,0 +1,73 @@
+/* ---- Accessibility and navigation ---- */
+.skip-link { position: fixed; left: 1rem; top: -4rem; z-index: 2000; background: var(--brass); color: var(--ink); padding: 0.75rem 1.1rem; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; transition: top 0.3s var(--ease); }
+.skip-link:focus { top: 1rem; }
+main:focus { outline: none; }
+
+.backlink { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--bone-dim); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; padding: 0.4rem 0; transition: color 0.4s var(--ease); }
+.backlink__arrow { transition: transform 0.5s var(--ease); }
+.backlink:hover { color: var(--brass-hi); }
+.backlink:hover .backlink__arrow { transform: translateX(-6px); }
+.crumbs-row { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.crumbs-row .crumbs { margin: 0; }
+
+.notfound { max-width: 40rem; }
+.notfound .backlink { margin-bottom: 2.5rem; }
+.notfound__title { font-size: clamp(2.6rem, 7vw, 4.6rem); margin-bottom: 1rem; }
+.notfound p { margin-bottom: 2rem; }
+
+/* page transition */
+.route-fade { animation: routeIn 0.7s var(--ease) backwards; }
+@keyframes routeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---- Shop: sticky filter bar with a live count ---- */
+.filterbar { position: sticky; top: 66px; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem 1.5rem; padding: 0.85rem 0; margin-bottom: 2.25rem; background: rgba(10, 10, 10, 0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.filterbar .filters { margin: 0; }
+.filterbar__count { margin: 0; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bone-dim); font-variant-numeric: tabular-nums; }
+
+/* ---- Product cards: notes slide up on hover ---- */
+.product-card__stage { position: relative; }
+.product-card__notes { position: absolute; inset: auto 0 0 0; margin: 0; padding: 2.4rem 1.1rem 1.1rem; display: grid; gap: 0.4rem; background: linear-gradient(to top, #0a0a0a 76%, rgba(10, 10, 10, 0)); transform: translateY(102%); opacity: 0; transition: transform 0.6s var(--ease), opacity 0.35s var(--ease); }
+.product-card__notes div { display: grid; grid-template-columns: 3.4rem 1fr; gap: 0.5rem; align-items: baseline; }
+.product-card__notes dt { font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brass); font-weight: 500; }
+.product-card__notes dd { margin: 0; font-size: 0.82rem; color: var(--bone); line-height: 1.4; }
+.product-card:hover .product-card__notes, .product-card:focus-visible .product-card__notes { transform: translateY(0); opacity: 1; }
+@media (hover: none) { .product-card__notes { display: none; } }
+
+/* ---- Houses strip ---- */
+.marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.5rem 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.marquee__track { display: flex; width: max-content; animation: marquee 70s linear infinite; }
+.marquee__list { display: flex; margin: 0; padding: 0; list-style: none; }
+.marquee__list li { position: relative; padding: 0 2.4rem; font-family: var(--serif); font-style: italic; font-size: clamp(1.4rem, 2.4vw, 2rem); color: var(--bone-dim); white-space: nowrap; line-height: 1.2; }
+.marquee__list li::after { content: ''; position: absolute; right: -3px; top: 50%; width: 5px; height: 5px; background: var(--brass); opacity: 0.75; transform: translateY(-50%) rotate(45deg); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---- Hero scroll cue ---- */
+.hero__scroll { position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%); z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.7rem; font-size: 0.64rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--bone-dim); }
+.hero__scroll i { position: relative; width: 1px; height: 46px; background: rgba(212, 185, 126, 0.18); overflow: hidden; }
+.hero__scroll i::after { content: ''; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--brass-hi); animation: scrollcue 2.4s var(--ease) infinite; }
+@keyframes scrollcue { to { top: 100%; } }
+@media (max-width: 767px) { .hero__scroll { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-fade, .marquee__track, .hero__scroll i::after { animation: none; }
+  .marquee__track { width: auto; flex-wrap: wrap; justify-content: center; }
+  .marquee__list:nth-child(2), .marquee__list li.is-dup { display: none; }
+  .marquee__list { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ---- Sort control ---- */
+.filterbar__right { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+.sortbox { display: inline-flex; align-items: center; gap: 0.7rem; margin: 0; }
+.sortbox__label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bone-dim); }
+.sortselect { appearance: none; -webkit-appearance: none; background-color: var(--ink); color: var(--bone); border: 1px solid var(--line); border-radius: 0; padding: 0.6rem 2.4rem 0.6rem 1rem; font-family: var(--sans); font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: border-color 0.4s var(--ease); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23d4b97e' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.95rem center; background-size: 11px 7px; }
+.sortselect:hover { border-color: var(--bone-dim); }
+.sortselect:focus-visible { border-color: var(--brass); outline: 2px solid var(--brass-hi); outline-offset: 3px; }
+.sortselect option { background: var(--ink-2); color: var(--bone); text-transform: none; letter-spacing: 0; }
+@media (max-width: 575px) { .filterbar__right { width: 100%; justify-content: space-between; } }
+
+/* ---- Houses strip: logos ---- */
+.marquee__list li { display: flex; align-items: center; padding: 0 3.2rem; }
+.marquee__list li img { display: block; width: auto; opacity: 0.78; transition: opacity 0.5s var(--ease); }
+.marquee__list li:hover img { opacity: 1; }
+.marquee__list li::after { right: -2px; }
+.marquee__track { animation-duration: 90s; }

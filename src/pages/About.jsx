@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
+import Divider from '../components/Divider'
 import useReveal from '../hooks/useReveal'
 
 const team = [
@@ -18,6 +19,7 @@ export default function About() {
           <h1>About us</h1>
           <p className="muted">Three friends, one shelf that got out of hand.</p>
         </header>
+        <Divider variant="ticks" />
 
         <Row className="gy-4 mb-5">
           {team.map((m) => (

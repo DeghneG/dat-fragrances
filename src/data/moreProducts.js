@@ -1,0 +1,96 @@
+// Hypothetical store: prices (PHP), descriptions and notes are written for this class project
+// and are not official brand claims. Bottles use the drawn placeholder until photos are added.
+const slugify = (s) =>
+  s
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+
+// [house, name, family, price, tint, shape, tagline, description, top, heart, base]
+const rows = {
+  'Middle Eastern': [
+    ['Lattafa', 'Khamrah', 'Gourmand Spicy', 2200, '#b0703a', 'round', 'Cinnamon, dates and warm vanilla.', 'A dessert-leaning spice blend that opens with cinnamon and settles into sweet dates and a long vanilla trail. Cozy, rich and easy to notice.', ['Cinnamon', 'Nutmeg', 'Bergamot'], ['Dates', 'Praline', 'Tuberose'], ['Vanilla', 'Tonka Bean', 'Amber']],
+    ['Lattafa', 'Asad', 'Amber Spicy', 1900, '#2b2622', 'block', 'Dark, spicy and built to last.', 'Black pepper and tobacco over coffee and patchouli, finishing on a dry, ambery vanilla. A confident evening scent that lasts.', ['Black Pepper', 'Tobacco Leaf', 'Pineapple'], ['Patchouli', 'Coffee', 'Iris'], ['Vanilla', 'Amber', 'Dry Woods']],
+    ['Lattafa', 'Yara', 'Sweet Floral', 1700, '#d58ea0', 'round', 'Powdery orchid over soft vanilla.', 'A soft, creamy floral with a candy-like sweetness. Light, friendly and made for everyday wear.', ['Orchid', 'Heliotrope', 'Tangerine'], ['Gourmand Accord', 'Tropical Fruits'], ['Vanilla', 'Sandalwood', 'Musk']],
+    ['Lattafa', 'Eclaire', 'Gourmand', 2000, '#e3c6a0', 'flask', 'Caramel and milky vanilla.', 'A glossy, sweet gourmand of caramel and creamy milk, warmed by vanilla and soft woods.', ['Sugar', 'Caramel'], ['Milk', 'Honey'], ['Vanilla', 'Sandalwood']],
+    ['Rasasi', 'Hawas for Him', 'Aquatic Fruity', 2400, '#4f8fc0', 'flask', 'Cool aquatic freshness with a sweet edge.', 'A fresh, watery fruit blend that stays bright in the heat, drying down to ambery woods and musk.', ['Apple', 'Lemon', 'Bergamot'], ['Orange Blossom', 'Cardamom', 'Plum'], ['Patchouli', 'Grey Amber', 'Driftwood', 'Musk']],
+    ['Rasasi', 'Hawas Black', 'Woody Mossy', 2600, '#1c1c1f', 'block', 'Dark citrus over mossy woods.', 'Bright pineapple and grapefruit over patchouli and cedar, drying into oakmoss and amber. A darker, earthier turn on the Hawas idea.', ['Pineapple', 'Bergamot', 'Grapefruit'], ['Patchouli', 'Cedarwood', 'Jasmine'], ['Oakmoss', 'Amber', 'Woody Notes']],
+    ['Rasasi', 'Hawas Ice', 'Aquatic Fresh', 2500, '#9fd3e6', 'flask', 'Icy citrus and cooling mint.', 'A chilled, sparkling take on the Hawas idea: mint and citrus over marine notes and clean musk.', ['Mint', 'Lemon', 'Bergamot'], ['Apple', 'Marine Notes'], ['Musk', 'Amber', 'Driftwood']],
+    ['Rasasi', 'Hawas Kobra', 'Aromatic Spicy', 2500, '#4a7a5a', 'flask', 'Fresh apple and lemon with a spicy heart.', 'Bergamot, apple and lemon over cardamom, cinnamon and lavender, resting on amber, musk and cedar. Fresh, warm and bold.', ['Bergamot', 'Apple', 'Lemon'], ['Cardamom', 'Cinnamon', 'Orange Blossom', 'Lavender'], ['Amber', 'Musk', 'Patchouli', 'Cedarwood']],
+    ['French Avenue', 'Liquid Brun', 'Gourmand Vanilla', 2600, '#6e4a32', 'block', 'Dark, sugary vanilla with a warm spice.', 'A deep, sweet vanilla gourmand with praline and a touch of spice. Warm, dense and made for cold evenings.', ['Cardamom', 'Bergamot'], ['Praline', 'Tonka Bean'], ['Vanilla', 'Amber', 'Patchouli']],
+    ['French Avenue', 'Fakhar Black', 'Fresh Woody', 2400, '#1f1f22', 'tall', 'Fresh spice over clean woods.', 'Lavender and cardamom over geranium and sage, drying down to smooth amberwood. Sharp, clean and polished.', ['Bergamot', 'Lavender', 'Cardamom'], ['Geranium', 'Sage'], ['Amberwood', 'Tonka Bean', 'Musk']],
+    ['French Avenue', 'Royal Blend Sequoia', 'Boozy Floral Woody', 3000, '#7a3a4a', 'tall', 'Boozy raspberry and velvet rose.', 'Raspberry and cognac over rose and moss, settling into praline, oak and sandalwood. Rich, boozy and smooth.', ['Raspberry', 'Cognac', 'Liqueur'], ['Rose', 'Moss'], ['Praline', 'Oak', 'Sandalwood']],
+    ['French Avenue', 'Vulcan Feu', 'Fruity Spicy', 2800, '#d8502a', 'round', 'Juicy mango with a fiery, smoky core.', 'Mango, ginger and red berries over jasmine and cedar, finishing on musk, amber and oud. Fruity, hot and long-lasting.', ['Mango', 'Ginger', 'Lemon', 'Red Berries'], ['Coumarin', 'Jasmine', 'Cedar'], ['Musk', 'Amber', 'Oud', 'Cypriol']],
+    ['Armaf', 'Club de Nuit Intense Man', 'Fruity Smoky', 2900, '#8a8f66', 'block', 'Smoky birch and bright citrus.', 'Lemon and pineapple open onto a smoky birch heart, with musk and ambergris underneath. A popular fresh-smoky signature.', ['Lemon', 'Bergamot', 'Pineapple', 'Apple', 'Blackcurrant'], ['Birch', 'Jasmine', 'Rose'], ['Musk', 'Ambergris', 'Vanilla', 'Patchouli']],
+    ['Armaf', 'Club de Nuit Untold', 'Amber Woody', 3200, '#a8863e', 'flask', 'Saffron and sweet amber.', 'Spiced saffron and bergamot over floral warmth, finishing on amber, vanilla and woods.', ['Saffron', 'Bergamot'], ['Jasmine', 'Rose'], ['Amber', 'Vanilla', 'Woods']],
+    ['Armaf', 'Odyssey Mandarin Sky', 'Citrus Woody', 2300, '#e0a040', 'flask', 'Sunny mandarin over soft cedar.', 'A juicy, easy citrus that dries into cedar and musk. Light and good for the day.', ['Mandarin', 'Bergamot'], ['Lavender', 'Apple'], ['Cedar', 'Musk', 'Amber']],
+    ['Armaf', 'Dunescape', 'Aromatic Fougere', 2700, '#d8b878', 'tall', 'Citrus, juniper and dry desert air.', 'Lemon, blood orange and ginger over geranium, rose and cashmeran, settling into dry amber, musk and sandalwood. Bright, clean and dry.', ['Lemon', 'Mandarin', 'Bergamot', 'Blood Orange', 'Ginger', 'Juniper', 'Sage'], ['Cashmeran', 'Geranium', 'Rose', 'Apple'], ['Dry Amber', 'Musk', 'Sandalwood']],
+    ['Afnan', '9PM', 'Spicy Vanilla', 2500, '#5a3a7a', 'block', 'Cinnamon, vanilla and a night out.', 'Cinnamon and lavender over orange blossom, settling into vanilla, tonka and amber. Sweet, warm and made for evenings.', ['Cinnamon', 'Wild Lavender', 'Apple', 'Bergamot'], ['Orange Blossom', 'Lily of the Valley'], ['Vanilla', 'Tonka Bean', 'Amber', 'Patchouli']],
+    ['Afnan', 'Supremacy Not Only Intense', 'Fruity Woody', 2800, '#4a5a3a', 'block', 'Fruit, smoke and a strong drydown.', 'Pineapple and bergamot over birch and jasmine, finishing on musk and mossy ambergris.', ['Pineapple', 'Bergamot'], ['Birch', 'Jasmine'], ['Musk', 'Ambergris', 'Oakmoss']],
+    ['Afnan', '9AM', 'Fresh Aromatic', 2400, '#e6c84a', 'flask', 'Lavender and lemon for the morning.', 'A bright lavender and citrus opening that dries into soft woods and clean musk.', ['Lavender', 'Bergamot', 'Lemon'], ['Jasmine', 'Geranium'], ['Musk', 'Cedar', 'Amber']],
+    ['Afnan', 'Turathi Blue', 'Aromatic Fresh', 2300, '#3f7fb8', 'tall', 'Cool citrus, spice and amber.', 'Citrus and lavender with a touch of pepper over an amber and woods base. Fresh, clean and versatile.', ['Bergamot', 'Lemon'], ['Lavender', 'Pepper'], ['Amber', 'Woods', 'Musk']],
+  ],
+  Designer: [
+    ['Yves Saint Laurent', 'Libre', 'Floral Lavender', 7800, '#d4a070', 'tall', 'Lavender with a daring edge.', 'Lavender and orange blossom lifted by a warm vanilla base. Elegant, bold and confident.', ['Lavender', 'Mandarin'], ['Orange Blossom', 'Jasmine'], ['Vanilla', 'Musk', 'Cedar']],
+    ['Yves Saint Laurent', 'Y Eau de Parfum', 'Fresh Woody', 7400, '#3d5a8a', 'flask', 'Clean, sharp and modern.', 'Apple and ginger over sage and geranium, drying to smooth amberwood and tonka.', ['Bergamot', 'Apple', 'Ginger'], ['Sage', 'Juniper', 'Geranium'], ['Amberwood', 'Tonka Bean', 'Cedar']],
+    ['Louis Vuitton', 'Imagination', 'Citrus Aromatic', 24500, '#e2b85a', 'tall', 'Citrus and black tea, effortlessly cool.', 'Sparkling citron and ginger over black tea, resting on a clean ambroxan base. Fresh and luminous.', ['Citron', 'Ginger'], ['Black Tea', 'Cinnamon'], ['Ambroxan', 'Guaiac Wood']],
+    ['Louis Vuitton', 'Ombre Nomade', 'Woody Oud', 26800, '#4a2a22', 'block', 'Smoky oud under a raspberry glow.', 'Deep oud and incense with a flash of raspberry and birch. Dark, dramatic and luxurious.', ['Raspberry', 'Saffron'], ['Oud', 'Incense', 'Birch'], ['Benzoin', 'Amber', 'Patchouli']],
+    ['Chanel', 'Coco Mademoiselle', 'Floral Oriental', 8900, '#e0a070', 'tall', 'A fresh, feminine classic.', 'Orange and jasmine over rose, grounded by patchouli and vanilla. Polished and timeless.', ['Orange', 'Bergamot'], ['Jasmine', 'Rose'], ['Patchouli', 'Vanilla', 'Vetiver']],
+    ['Chanel', 'Allure Homme Sport', 'Fresh Spicy', 7800, '#6aa0c8', 'flask', 'Fresh citrus and a spicy kick.', 'Citrus and pepper with a sweet vanilla and tonka drydown. Energetic and easy to wear.', ['Citrus', 'Pepper'], ['Neroli', 'Cedar'], ['Vanilla', 'Tonka Bean', 'Musk']],
+    ['Giorgio Armani', 'Acqua di Giò', 'Aquatic', 6200, '#6cb0d0', 'flask', 'The sea in a bottle.', 'Marine freshness with bergamot and jasmine over patchouli. A clean, breezy staple.', ['Bergamot', 'Marine Notes'], ['Jasmine', 'Rosemary'], ['Patchouli', 'Cedar', 'Musk']],
+    ['Giorgio Armani', 'Stronger With You Intensely', 'Sweet Spicy', 7600, '#7a3a3a', 'block', 'Warm chestnut and vanilla.', 'Pink pepper and cinnamon over sweet chestnut, melting into vanilla and amber. Comforting and bold.', ['Pink Pepper', 'Violet Leaf'], ['Cinnamon', 'Chestnut'], ['Vanilla', 'Amber', 'Woods']],
+    ['Dolce & Gabbana', 'Light Blue', 'Citrus Fresh', 5800, '#7ac0e0', 'round', 'Sun, lemon and sea breeze.', 'Sicilian lemon and apple over cedar and musk. Bright and carefree.', ['Sicilian Lemon', 'Apple'], ['Jasmine', 'Bamboo'], ['Cedar', 'Musk', 'Amber']],
+    ['Dolce & Gabbana', 'The One for Men', 'Spicy Tobacco', 6400, '#8a5a2a', 'block', 'Smooth tobacco and amber.', 'Grapefruit and ginger over tobacco and cedar, settling into warm amber. Suave and refined.', ['Grapefruit', 'Coriander'], ['Ginger', 'Orange Blossom'], ['Tobacco', 'Amber', 'Cedar']],
+    ['Dior', 'Dior Homme Intense', 'Iris Woody', 8800, '#5a5a78', 'tall', 'Powdery iris and smooth woods.', 'Iris and lavender over soft vetiver and cedar. Elegant, velvety and quietly intense.', ['Lavender', 'Pear'], ['Iris', 'Ambrette'], ['Vetiver', 'Cedar', 'Leather']],
+    ['Dior', "J'adore", 'Floral', 8600, '#e8c870', 'round', 'A golden bouquet.', 'A radiant mix of ylang-ylang, rose and jasmine over soft musk. Rich and graceful.', ['Pear', 'Bergamot'], ['Ylang-Ylang', 'Rose', 'Jasmine'], ['Musk', 'Cedar', 'Vanilla']],
+    ['Prada', 'Luna Rossa Carbon', 'Fresh Aromatic', 6900, '#3a3f48', 'tall', 'Metallic freshness and lavender.', 'Bergamot and lavender over a smooth ambroxan and patchouli base. Crisp, modern and clean.', ['Bergamot', 'Pepper'], ['Lavender', 'Mint'], ['Ambroxan', 'Patchouli']],
+    ['Versace', 'Eros', 'Fresh Sweet', 5400, '#3aa0b8', 'flask', 'Mint, vanilla and a loud entrance.', 'Mint and green apple over tonka and vanilla. Sweet, fresh and attention-grabbing.', ['Mint', 'Green Apple', 'Lemon'], ['Geranium', 'Ambroxan'], ['Tonka Bean', 'Vanilla', 'Cedar']],
+    ['Versace', 'Dylan Blue', 'Aromatic Fougere', 5200, '#2f5fa0', 'block', 'Fresh citrus and deep incense.', 'Bergamot and fig leaf over black pepper and incense, drying to musk and patchouli.', ['Bergamot', 'Grapefruit', 'Fig Leaf'], ['Black Pepper', 'Violet', 'Incense'], ['Musk', 'Patchouli', 'Tonka Bean']],
+  ],
+  Niche: [
+    ['Amouage', 'Interlude Man', 'Smoky Amber', 14500, '#6a4a2a', 'block', 'Smoke, incense and a wild herbal opening.', 'A chaotic, smoky blend of oregano and incense over amber, leather and oud. Dense, dramatic and unforgettable.', ['Oregano', 'Bergamot', 'Pimento'], ['Amber', 'Frankincense', 'Opoponax'], ['Oud', 'Leather', 'Sandalwood', 'Patchouli']],
+    ['Amouage', 'Reflection Man', 'Fresh Floral Woody', 12800, '#a0b8c8', 'tall', 'Rosemary and neroli, quietly elegant.', 'Fresh rosemary and neroli over orris and jasmine, resting on soft sandalwood and cedar. Refined and clean.', ['Rosemary', 'Pink Pepper', 'Bergamot'], ['Neroli', 'Jasmine', 'Orris'], ['Sandalwood', 'Cedar', 'Musk']],
+    ['Amouage', 'Epic Man', 'Spicy Woody', 13800, '#5a2a22', 'flask', 'Pepper, rose and a deep oud base.', 'Spiced pepper and cardamom over rose and incense, finishing on oud, leather and patchouli. Bold and ceremonial.', ['Black Pepper', 'Cardamom'], ['Rose', 'Incense'], ['Oud', 'Leather', 'Patchouli']],
+    ['Xerjoff', 'Naxos', 'Honeyed Tobacco', 21500, '#c8963a', 'round', 'Honey, tobacco and lavender in the sun.', 'Lavender and bergamot over honey and cinnamon, drying into tobacco, vanilla and tonka. Sweet, rich and polished.', ['Lavender', 'Bergamot', 'Lemon'], ['Honey', 'Cinnamon', 'Jasmine'], ['Tobacco', 'Vanilla', 'Tonka Bean']],
+    ['Xerjoff', 'Erba Pura', 'Fruity Amber', 20500, '#e08a50', 'round', 'A burst of Sicilian fruit on warm amber.', 'Sicilian orange and bergamot over ripe fruit, sinking into amber, vanilla and white musk. Radiant and long-lasting.', ['Sicilian Orange', 'Bergamot', 'Lemon'], ['Ripe Fruits', 'Peach'], ['Amber', 'Vanilla', 'White Musk']],
+    ['Xerjoff', 'Alexandria II', 'Woody Oud', 24500, '#4a3a5a', 'block', 'Oud, rose and lavender, with presence.', 'Bergamot and lavender over rose and oud, settling into amber and sandalwood. Regal and warm.', ['Bergamot', 'Lavender', 'Cinnamon'], ['Rose', 'Oud'], ['Amber', 'Sandalwood', 'Vanilla']],
+    ['Initio Parfums Privés', 'Oud for Greatness', 'Woody Oud', 17800, '#3a3a3a', 'tall', 'Saffron and oud, with a clean edge.', 'Saffron and lavender over smooth oud and patchouli, ending on a soft musk. Powerful, polished and modern.', ['Saffron', 'Nutmeg', 'Lavender'], ['Oud', 'Patchouli'], ['Musk']],
+    ['Initio Parfums Privés', 'Side Effect', 'Boozy Gourmand', 18500, '#7a3a28', 'block', 'Rum, tobacco and vanilla after dark.', 'Cinnamon and cardamom over rum and tobacco, melting into vanilla and benzoin. Smooth, sweet and heady.', ['Cinnamon', 'Cardamom'], ['Rum', 'Tobacco'], ['Vanilla', 'Benzoin', 'Sandalwood']],
+    ['Initio Parfums Privés', 'Atomic Rose', 'Rose Amber', 17200, '#d0587a', 'round', 'Rose with a loud, glowing core.', 'Radiant rose and jasmine wrapped in amber and musk. Sensual, rich and unapologetic.', ['Pink Pepper', 'Rose'], ['Rose', 'Jasmine'], ['Amber', 'Musk']],
+    ['Argos Fragrances', 'Triumph of Bacchus', 'Gourmand Woody', 13800, '#8a3a4a', 'block', 'Saffron, tobacco and wine-dark vanilla.', 'Apple, peach and saffron over jasmine and tobacco, resting on vanilla, musk and sandalwood. Lush, warm and celebratory.', ['Apple', 'Peach', 'Saffron'], ['Jasmine', 'Tobacco'], ['Vanilla', 'Musk', 'Sandalwood', 'Vetiver', 'Tonka Bean', 'Patchouli']],
+    ['Argos Fragrances', 'Pour Homme', 'Fresh Aromatic', 12800, '#5a8a9a', 'tall', 'Gin and pine, crisp and clear.', 'Gin, citrus and pine over lavender, violet and jasmine, settling into sage, sandalwood, cedar and white musk.', ['Gin', 'Orange', 'Lemon', 'Lime', 'Pine'], ['Lavender', 'Violet', 'Jasmine', 'Vetiver'], ['Sage', 'Sandalwood', 'Cedar', 'Amber', 'White Musk']],
+    ['Argos Fragrances', 'Perseus Triumphant', 'Spicy Floral', 15800, '#a85a3a', 'flask', 'Saffron and rose, heroic and dark.', 'Bergamot, saffron and cardamom over rose and leather, ending on cedar, musk and oud.', ['Bergamot', 'Saffron', 'Cardamom'], ['Rose', 'Leather'], ['Cedar', 'Musk', 'Oud']],
+    ['Creed', 'Silver Mountain Water', 'Fresh Citrus Green', 17500, '#a8c8d8', 'tall', 'Snow-fed streams and green tea.', 'Bergamot and mandarin over green tea and blackcurrant, with a clean musk and sandalwood base. Crisp and alpine.', ['Bergamot', 'Mandarin', 'Blackcurrant'], ['Green Tea'], ['Musk', 'Sandalwood']],
+    ['Creed', 'Green Irish Tweed', 'Fresh Green', 17200, '#6a9a5a', 'tall', 'Cut grass, iris and a breezy classic.', 'Lemon verbena and iris over violet leaf, finishing on ambergris and sandalwood. A long-standing green icon.', ['Lemon Verbena', 'Iris'], ['Violet Leaf'], ['Ambergris', 'Sandalwood']],
+    ['Creed', 'Viking', 'Fresh Spicy', 18200, '#5a6a8a', 'block', 'Peppermint, rose and clean woods.', 'Bergamot and pink pepper over rose and lavender, with patchouli, vetiver and sandalwood underneath. Bold and fresh.', ['Bergamot', 'Pink Pepper', 'Peppermint'], ['Rose', 'Lavender'], ['Sandalwood', 'Vetiver', 'Patchouli']],
+    ['Creed', 'Millésime Imperial', 'Fresh Marine', 17000, '#7ab0b8', 'flask', 'Sea salt and citrus, effortlessly rich.', 'Bergamot, lemon and mandarin over iris and a salty marine touch, resting on musk and sandalwood.', ['Bergamot', 'Lemon', 'Mandarin'], ['Iris', 'Sea Salt'], ['Musk', 'Sandalwood']],
+  ],
+}
+
+// Product photos by slug (files live in /public/images). Anything missing uses the drawn bottle.
+const PHOTOS = {
+  'lattafa-khamrah': '/images/lattafa-khamrah.png',
+  'armaf-club-de-nuit-intense-man': '/images/armaf-club-de-nuit-intense-man.png',
+}
+
+export const extras = Object.entries(rows).flatMap(([category, list]) =>
+  list.map(([house, name, family, price, tint, shape, tagline, description, top, heart, base]) => ({
+    slug: slugify(`${house} ${name}`),
+    image: PHOTOS[slugify(`${house} ${name}`)],
+    category,
+    name,
+    house,
+    family,
+    price,
+    tint,
+    shape,
+    tagline,
+    description,
+    notes: { top, heart, base },
+    sizes: [
+      { ml: 50, price },
+      { ml: 100, price: Math.round((price * 1.45) / 100) * 100 },
+    ],
+  })),
+)

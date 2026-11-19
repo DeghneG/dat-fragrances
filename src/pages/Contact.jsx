@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { Alert, Button, Col, Container, Form, Row } from 'react-bootstrap'
+import Divider from '../components/Divider'
 import useReveal from '../hooks/useReveal'
 
 export default function Contact() {
@@ -26,13 +27,14 @@ export default function Contact() {
           <h1>Contact us</h1>
           <p className="muted">Questions about a scent, an order, or what to wear on Friday? Write to us.</p>
         </header>
+        <Divider variant="ticks" />
         <Row className="gy-5">
           <Col lg={5} data-reveal>
             <h2 className="info-head">Visit</h2>
             <address className="muted">
               DAT Fragrances Atelier<br />
-              Unit 5, Aurora Row, Cubao<br />
-              Quezon City, Metro Manila 1109
+              Unit 5, Aurora Row<br />
+              Leganes, Iloilo
             </address>
             <h2 className="info-head">Hours</h2>
             <p className="muted">Mon to Sat, 10 AM to 7 PM<br />Sunday, by appointment</p>

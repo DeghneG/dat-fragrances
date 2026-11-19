@@ -1,12 +1,22 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ProductVisual from './ProductVisual'
 import { peso } from '../data/products'
 
-export default function ProductCard({ product }) {
+const tier = (list) => list.slice(0, 2).join(', ')
+
+export default function ProductCard({ product, from }) {
+  const location = useLocation()
+  const origin = from ?? location.pathname + location.search
+  const { top, heart, base } = product.notes
   return (
-    <Link to={`/shop/${product.slug}`} className="product-card" data-reveal>
+    <Link to={`/shop/${product.slug}`} state={{ from: origin }} className="product-card" data-reveal>
       <div className={`product-card__stage ${product.image ? 'has-photo' : ''}`}>
         <ProductVisual product={product} />
+        <dl className="product-card__notes" aria-hidden="true">
+          <div><dt>Top</dt><dd>{tier(top)}</dd></div>
+          <div><dt>Heart</dt><dd>{tier(heart)}</dd></div>
+          <div><dt>Base</dt><dd>{tier(base)}</dd></div>
+        </dl>
       </div>
       <div className="product-card__meta">
         <p className="product-card__house">{product.house}</p>

@@ -1,6 +1,19 @@
 // Hypothetical store: prices (PHP) and descriptions are written for this class project
 // and are not official brand claims. Bottle art is a placeholder illustration.
-export const products = [
+import { extras } from './moreProducts'
+
+const CATEGORY = {
+  'creed-aventus': 'Niche',
+  'mfk-baccarat-rouge-540': 'Niche',
+  'pdm-layton': 'Niche',
+  'byredo-gypsy-water': 'Niche',
+  'le-labo-santal-33': 'Niche',
+  'dior-sauvage-elixir': 'Designer',
+  'tom-ford-oud-wood': 'Designer',
+  'chanel-bleu-de-chanel': 'Designer',
+}
+
+const base = [
   {
     slug: 'creed-aventus',
     image: '/images/aventus.png',
@@ -154,6 +167,8 @@ export const products = [
     sizes: [{ ml: 50, price: 19800 }, { ml: 100, price: 28800 }],
   },
 ]
+
+export const products = [...base.map((p) => ({ ...p, category: CATEGORY[p.slug] })), ...extras]
 
 export const featured = ['creed-aventus', 'mfk-baccarat-rouge-540', 'le-labo-santal-33']
 
