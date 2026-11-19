@@ -1,9 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import ProductVisual from '../components/ProductVisual'
-import QtyStepper from '../components/QtyStepper'
-import { useCart } from '../context/CartContext'
 import ProductCard from '../components/ProductCard'
 import BackLink from '../components/BackLink'
 import Divider from '../components/Divider'
@@ -22,11 +20,6 @@ export default function Product() {
   const product = bySlug(slug)
   const root = useRef(null)
   const [sizeIdx, setSizeIdx] = useState(0)
-  const [qty, setQty] = useState(1)
-  const [added, setAdded] = useState(false)
-  const { add } = useCart()
-  const addedTimer = useRef(0)
-  useEffect(() => () => window.clearTimeout(addedTimer.current), [])
   useReveal(root, [slug])
 
   if (!product) {
@@ -80,26 +73,17 @@ export default function Product() {
                     role="radio"
                     aria-checked={sizeIdx === i}
                     className={`filter ${sizeIdx === i ? 'is-active' : ''}`}
-                    onClick={() => { setSizeIdx(i); setAdded(false) }}
+                    onClick={() => setSizeIdx(i)}
                   >
                     {s.ml} ml
                   </button>
                 ))}
               </div>
               <p className="product-price" data-reveal>{peso(size.price)}</p>
-              <div className="buyrow" data-reveal>
-                <QtyStepper value={qty} onChange={setQty} />
-                <Button
-                  type="button"
-                  className="btn-brass"
-                  onClick={() => { add(product.slug, size.ml, qty); setAdded(true); window.clearTimeout(addedTimer.current); addedTimer.current = window.setTimeout(() => setAdded(false), 4000) }}
-                >
-                  Add to Cart &middot; {peso(size.price * qty)}
-                </Button>
-              </div>
-              <p className="addedmsg" role="status" aria-live="polite">
-                {added && <>Added to your cart. <Link to="/cart">View cart</Link> or <Link to="/checkout">check out</Link>.</>}
-              </p>
+              {/* layout only: does nothing when clicked */}
+              <Button type="button" className="btn-brass btn-lg-wide" data-reveal>
+                Add to Cart
+              </Button>
 
               <dl className="pyramid" data-reveal>
                 {TIERS.map(([key, label, hint]) => (

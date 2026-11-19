@@ -1,16 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import AventusScene from './AventusScene'
-import { useCart } from '../context/CartContext'
 import { peso, products } from '../data/products'
 
 // Feature section: the house-first pitch, with the draggable 3D Aventus as a small featured tile.
 export default function HouseIntro({ product }) {
-  const { add } = useCart()
-  const [added, setAdded] = useState(false)
-  const timer = useRef(0)
-  useEffect(() => () => window.clearTimeout(timer.current), [])
   const size = product.sizes[0]
   const facts = [
     [products.length, 'Fragrances'],
@@ -55,16 +49,8 @@ export default function HouseIntro({ product }) {
               </dl>
               <p className="hi__price"><small>from</small> {peso(size.price)} <small>/ {size.ml} ml</small></p>
               <div className="hi__actions">
-                <Button
-                  type="button"
-                  className="btn-brass"
-                  onClick={() => { add(product.slug, size.ml, 1); setAdded(true); window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setAdded(false), 2500) }}
-                >
-                  {added ? 'Added \u2713' : 'Add to cart'}
-                </Button>
-                <Link to={`/shop/${product.slug}`} className="hi__more">Discover</Link>
+                <Button as={Link} to={`/shop/${product.slug}`} className="btn-brass">Discover {product.name}</Button>
               </div>
-              <p className="hi__status" role="status" aria-live="polite">{added && <>In your cart. <Link to="/cart">View cart</Link></>}</p>
             </div>
           </aside>
         </div>
