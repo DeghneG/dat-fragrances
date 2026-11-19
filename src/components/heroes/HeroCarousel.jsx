@@ -44,6 +44,20 @@ const SLIDES = [
     ),
     cta: { label: 'Shop Niche', to: '/shop?category=Niche' },
   },
+  {
+    key: 'armani',
+    src: '/images/hero-armani-2128.webp',
+    src1x: '/images/hero-armani-1200.webp',
+    srcW: 2128,
+    alt: 'Three Giorgio Armani Acqua di Giò bottles on wet dark stone with citrus, white flowers and water splashes.',
+    eyebrow: 'Designer',
+    title: (
+      <>
+        Fresh as water, <em>cut from stone.</em>
+      </>
+    ),
+    cta: { label: 'Shop Giorgio Armani', to: '/shop?category=Designer' },
+  },
 ]
 
 const INTERVAL = 5000
@@ -149,7 +163,7 @@ export default function HeroCarousel() {
                 <img
                   className="hr__img"
                   src={s.src}
-                  srcSet={`${s.src1x} 1200w, ${s.src} 2400w`}
+                  srcSet={`${s.src1x} 1200w, ${s.src} ${s.srcW || 2400}w`}
                   sizes="100vw"
                   alt={clone ? '' : s.alt}
                   decoding="async"
