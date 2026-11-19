@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useSearchParams } from 'react-router-dom'
 import ProductCard from '../components/ProductCard'
@@ -7,6 +7,10 @@ import useReveal from '../hooks/useReveal'
 import { products } from '../data/products'
 
 const CATEGORIES = ['All', 'Middle Eastern', 'Designer', 'Niche']
+
+// lower-case and strip accents so 'gio' finds Giò and 'millesime' finds Millésime
+const norm = (t) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+const haystack = (p) => norm([p.house, p.name, p.family, p.category, ...(p.notes?.top || []), ...(p.notes?.heart || []), ...(p.notes?.base || [])].join(' '))
 
 const SORTS = {
   featured: { label: 'Featured', fn: null },
@@ -25,20 +29,26 @@ export default function Shop() {
   const askedSort = params.get('sort')
   const filter = CATEGORIES.includes(askedCat) ? askedCat : 'All'
   const sort = Object.hasOwn(SORTS, askedSort) ? askedSort : 'featured'
+  // the box keeps its own text so fast typing never drops characters; the URL just mirrors it
+  const [q, setQ] = useState(params.get('q') || '')
 
   const update = (next) => {
-    const merged = { category: filter, sort, ...next }
+    if ('q' in next) setQ(next.q)
+    const merged = { category: filter, sort, q, ...next }
     const out = {}
     if (merged.category !== 'All') out.category = merged.category
     if (merged.sort !== 'featured') out.sort = merged.sort
+    if (merged.q.trim()) out.q = merged.q
     setParams(out, { replace: true })
   }
 
   const list = useMemo(() => {
-    const base = filter === 'All' ? products : products.filter((p) => p.category === filter)
+    let base = filter === 'All' ? products : products.filter((p) => p.category === filter)
+    const terms = norm(q).split(/\s+/).filter(Boolean)
+    if (terms.length) base = base.filter((p) => { const h = haystack(p); return terms.every((t) => h.includes(t)) })
     const fn = SORTS[sort].fn
     return fn ? [...base].sort(fn) : base
-  }, [filter, sort])
+  }, [filter, sort, q])
   useReveal(root, [filter, sort])
 
   return (
@@ -50,6 +60,25 @@ export default function Shop() {
         </header>
         <Divider variant="ticks" />
         <div className="filterbar" data-reveal>
+          <div className="searchbox" role="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5L21 21" /></svg>
+            <input
+              type="search"
+              className="searchbox__input"
+              placeholder="Search by name, house or note"
+              aria-label="Search fragrances"
+              value={q}
+              onChange={(e) => update({ q: e.target.value })}
+              onKeyDown={(e) => { if (e.key === 'Escape' && q) update({ q: '' }) }}
+              autoComplete="off"
+              spellCheck="false"
+            />
+            {q && (
+              <button type="button" className="searchbox__clear" onClick={() => update({ q: '' })} aria-label="Clear search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+              </button>
+            )}
+          </div>
           <div className="filters" role="group" aria-label="Filter by collection">
             {CATEGORIES.map((f) => (
               <button
@@ -82,7 +111,14 @@ export default function Shop() {
             </Col>
           ))}
         </Row>
-        {list.length === 0 && <p className="muted">Nothing in this collection yet.</p>}
+        {list.length === 0 && (
+          <div className="noresults">
+            <p className="muted">{q.trim() ? `Nothing matches “${q.trim()}”${filter === 'All' ? '' : ` in ${filter}`}.` : 'Nothing in this collection yet.'}</p>
+            {(q.trim() || filter !== 'All') && (
+              <button type="button" className="btn-ghost btn" onClick={() => update({ q: '', category: 'All' })}>Clear search and filters</button>
+            )}
+          </div>
+        )}
       </Container>
     </div>
   )

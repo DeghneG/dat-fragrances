@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const year = new Date().getFullYear()
 
 export default function SiteFooter() {
   const [sent, setSent] = useState(false)
+  // the newsletter block is hidden on the contact page
+  const showNews = useLocation().pathname !== '/contact'
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -18,6 +20,7 @@ export default function SiteFooter() {
   return (
     <footer className="site-footer foot">
       <Container>
+        {showNews && (
         <Row className="foot__top gy-5 align-items-end">
           <Col lg={6}>
             <h2 className="foot__headline">
@@ -37,8 +40,9 @@ export default function SiteFooter() {
             </Form>
           </Col>
         </Row>
+        )}
 
-        <Row className="foot__cols gy-4">
+        <Row className={`foot__cols gy-4 ${showNews ? '' : 'foot__cols--solo'}`}>
           <Col md={4}>
             <p className="wordmark mb-2">
               DAT <span>Fragrances</span>

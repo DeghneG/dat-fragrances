@@ -41,6 +41,10 @@
   .hr__dot.is-on i { animation: none; transform: scaleX(1); }
 }
 
+/* clicking the left or right edge skips; only the cursor hints at it */
+.hr__view[data-edge="prev"] { cursor: w-resize; }
+.hr__view[data-edge="next"] { cursor: e-resize; }
+
 /* light slide (Creed): dark ink, copy low-left so it clears the logo */
 .hr__slide--light .hr__scrim { background: none; }
 @media (min-width: 992px) {

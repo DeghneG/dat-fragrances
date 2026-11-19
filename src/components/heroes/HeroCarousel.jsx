@@ -129,8 +129,20 @@ export default function HeroCarousel() {
     if (!d.down) return
     d.down = false
     const dx = e.clientX - d.x
-    if (Math.abs(dx) > SWIPE) { d.moved = true; if (dx < 0) next(); else prev(); setTick((t) => t + 1) }
+    if (Math.abs(dx) > SWIPE) { d.moved = true; if (dx < 0) next(); else prev(); setTick((t) => t + 1); return }
+    // a plain click on the left or right edge skips (no arrows drawn); links and buttons keep working
+    if (e.target.closest('a, button')) return
+    const side = edgeOf(e)
+    if (side === 'prev') { prev(); setTick((t) => t + 1) }
+    if (side === 'next') { next(); setTick((t) => t + 1) }
   }
+  const edgeOf = (e) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    const zone = r.width < 768 ? 0.22 : 0.14
+    const x = (e.clientX - r.left) / r.width
+    return x < zone ? 'prev' : x > 1 - zone ? 'next' : ''
+  }
+  const onMove = (e) => { e.currentTarget.dataset.edge = e.target.closest('a, button') ? '' : edgeOf(e) }
   const onClickCapture = (e) => { if (drag.current.moved) { e.preventDefault(); e.stopPropagation(); drag.current.moved = false } }
   const onKey = (e) => {
     if (e.key === 'ArrowRight') { e.preventDefault(); next() }
@@ -153,6 +165,8 @@ export default function HeroCarousel() {
         className="hr__view"
         onPointerDown={onDown}
         onPointerUp={onUp}
+        onPointerMove={onMove}
+        onPointerLeave={(e) => { e.currentTarget.dataset.edge = '' }}
         onPointerCancel={() => { drag.current.down = false }}
         onClickCapture={onClickCapture}
       >
