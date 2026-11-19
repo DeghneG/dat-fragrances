@@ -31,6 +31,19 @@ const SLIDES = [
     ),
     cta: { label: 'Shop Designer', to: '/shop?category=Designer' },
   },
+  {
+    key: 'initio',
+    src: '/images/hero-initio-2400.webp',
+    src1x: '/images/hero-initio-1200.webp',
+    alt: 'Initio Parfums Privés bottles on sandstone: the black and gold Oud for Greatness beside three purple bottles with gold diamond plates.',
+    eyebrow: 'Niche',
+    title: (
+      <>
+        Small houses, <em>singular ideas.</em>
+      </>
+    ),
+    cta: { label: 'Shop Niche', to: '/shop?category=Niche' },
+  },
 ]
 
 const INTERVAL = 5000
