@@ -89,3 +89,12 @@ main:focus { outline: none; }
 @media (max-width: 575px) { .searchbox { flex: 1 1 100%; } }
 
 .foot__cols--solo { margin-top: 0; border-top: 0; padding-top: 0; }
+
+/* about: where the name comes from */
+.nameorigin { margin: 0 0 5rem; padding: 2.4rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+.nameorigin__title { margin: 0 0 1.6rem; font-family: var(--sans); font-size: 0.74rem; font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brass); }
+.nameorigin__letters { list-style: none; margin: 0 0 1.4rem; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem clamp(2rem, 8vw, 6rem); }
+.nameorigin__letters li { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+.nameorigin__letters span { font-family: var(--serif); font-size: clamp(3.6rem, 8vw, 6rem); line-height: 1; color: var(--brass-hi); }
+.nameorigin__letters strong { font-weight: 400; font-size: 0.78rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--bone); }
+.nameorigin__note { max-width: 36rem; margin: 0 auto; }
