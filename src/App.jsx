@@ -7,7 +7,11 @@ import Shop from './pages/Shop'
 import Product from './pages/Product'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import OrderConfirmation from './pages/OrderConfirmation'
 import NotFound from './pages/NotFound'
+import { CartProvider } from './context/CartContext'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -28,6 +32,9 @@ function AnimatedRoutes() {
         <Route path="/shop/:slug" element={<Product />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order/:id" element={<OrderConfirmation />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
@@ -37,6 +44,7 @@ function AnimatedRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
+      <CartProvider>
       <ScrollToTop />
       <a className="skip-link" href="#main">Skip to content</a>
       <SiteNav />
@@ -44,6 +52,7 @@ export default function App() {
         <AnimatedRoutes />
       </main>
       <SiteFooter />
+      </CartProvider>
     </BrowserRouter>
   )
 }

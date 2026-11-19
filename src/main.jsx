@@ -5,6 +5,7 @@ import './index.css'
 import './atmosphere.css'
 import './polish.css'
 import './heroes.css'
+import './cart.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
