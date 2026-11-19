@@ -405,7 +405,14 @@ export default function AventusScene({ product }) {
         ro.observe(el)
 
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        const clock = new THREE.Clock()
+        const clock = (() => {
+          const t0 = performance.now()
+          let last = t0
+          return {
+            getDelta() { const now = performance.now(); const d = (now - last) / 1000; last = now; return d },
+            get elapsedTime() { return (performance.now() - t0) / 1000 },
+          }
+        })()
         let raf = 0
         bottle.rotation.y = -0.4
         // slosh physics: the surface tilt is a damped spring, kicked by how hard the bottle is moved

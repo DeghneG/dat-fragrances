@@ -111,6 +111,13 @@ export default function HeroCarousel() {
 
   const goTo = (i) => { setAnim(true); setIdx(i) }
 
+  // safety net for a missed transitionend (reduced motion, background tab): settle on the real first slide
+  useEffect(() => {
+    if (idx !== n) return undefined
+    const t = setTimeout(() => { setAnim(false); setIdx(0) }, 1300)
+    return () => clearTimeout(t)
+  }, [idx, n])
+
   // auto-advance; paused on hover/focus/drag, when the tab is hidden, and for reduced motion
   useEffect(() => {
     if (paused || reduce.current) return undefined
