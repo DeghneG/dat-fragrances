@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import DunesScene from './DunesScene'
 
 // Billboard hero. Slides sit side by side and the track wipes across, then loops.
 // To add a slide: push another entry here (photo slides need a file in /public/images).
 const SLIDES = [
   {
     key: 'lattafa',
-    kind: 'photo',
     src: '/images/hero-lattafa-2400.webp',
     src1x: '/images/hero-lattafa-1200.webp',
     alt: 'Lattafa fragrances on stone podiums: Khamrah, Khamrah Qahwa, Yara, Club de Nuit Intense Man, Eclaire, Badee Al Oud and Asad.',
@@ -21,19 +19,21 @@ const SLIDES = [
     cta: { label: 'Shop Middle Eastern', to: '/shop?category=Middle%20Eastern' },
   },
   {
-    key: 'signature',
-    kind: 'scene',
-    eyebrow: 'Designer · Middle Eastern · Niche',
+    key: 'valentino',
+    src: '/images/hero-valentino-2400.webp',
+    src1x: '/images/hero-valentino-1200.webp',
+    alt: 'Valentino Born in Roma fragrances in studded glass bottles on stone steps among lavender, with Rome at dusk behind.',
+    eyebrow: 'Designer',
     title: (
       <>
-        The scent <em>is the signature.</em>
+        Bold studs, <em>soft in the air.</em>
       </>
     ),
-    cta: { label: 'Shop the collection', to: '/shop' },
+    cta: { label: 'Shop Designer', to: '/shop?category=Designer' },
   },
 ]
 
-const INTERVAL = 6500
+const INTERVAL = 5000
 const SWIPE = 50
 
 export default function HeroCarousel() {
@@ -133,26 +133,17 @@ export default function HeroCarousel() {
                 aria-hidden={clone || !active ? true : undefined}
                 inert={!active}
               >
-                {s.kind === 'photo' ? (
-                  <>
-                    <img
-                      className="hr__img"
-                      src={s.src}
-                      srcSet={`${s.src1x} 1200w, ${s.src} 2400w`}
-                      sizes="100vw"
-                      alt={clone ? '' : s.alt}
-                      decoding="async"
-                      fetchPriority={i === 0 ? 'high' : undefined}
-                      draggable="false"
-                    />
-                    <div className="hr__scrim" aria-hidden="true" />
-                  </>
-                ) : (
-                  <>
-                    <DunesScene />
-                    <div className="hr__scrim hr__scrim--scene" aria-hidden="true" />
-                  </>
-                )}
+                <img
+                  className="hr__img"
+                  src={s.src}
+                  srcSet={`${s.src1x} 1200w, ${s.src} 2400w`}
+                  sizes="100vw"
+                  alt={clone ? '' : s.alt}
+                  decoding="async"
+                  fetchPriority={i === 0 ? 'high' : undefined}
+                  draggable="false"
+                />
+                <div className="hr__scrim" aria-hidden="true" />
                 <div className="hr__copy">
                   <p className="hr__eyebrow">{s.eyebrow}</p>
                   {/* only the first real slide owns the page h1 */}

@@ -6,7 +6,6 @@
 .hr__slide { position: relative; flex: 0 0 100%; height: 100%; overflow: hidden; }
 .hr__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 50%; pointer-events: none; }
 .hr__scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.22) 30%, rgba(10, 10, 10, 0) 50%); }
-.hr__scrim--scene { background: linear-gradient(90deg, rgba(10, 10, 10, 0.5) 0%, rgba(10, 10, 10, 0) 48%), linear-gradient(0deg, rgba(10, 10, 10, 0.5) 0%, rgba(10, 10, 10, 0) 40%); }
 
 .hr__copy { position: absolute; z-index: 2; left: clamp(1.5rem, 6vw, 6rem); top: 50%; transform: translateY(-50%); width: min(36%, 31rem); }
 .hr__eyebrow { margin: 0 0 1rem; font-size: 0.72rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--bone); opacity: 0.9; }
@@ -26,30 +25,18 @@
 .hr__dot.is-on i { animation: hrfill linear both; }
 @keyframes hrfill { to { transform: scaleX(1); } }
 
-/* the dusk scene (slide two) */
-.hx__scene { position: absolute; inset: 0; }
-.hx__svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.hx__scene .motes { opacity: 0.7; }
-.hx__sun--narrow { display: none; }
-.hx__ridge { animation: hxdrift 38s ease-in-out infinite alternate; }
-.hx__ridge--mid1 { animation-duration: 30s; animation-direction: alternate-reverse; }
-.hx__ridge--mid2 { animation-duration: 24s; }
-.hx__ridge--near { animation: none; }
 @keyframes hxdrift { from { transform: translateX(-14px); } to { transform: translateX(14px); } }
 
 @media (max-width: 991px) {
   .hr__view { aspect-ratio: auto; height: min(36rem, 82svh); min-height: 0; }
   .hr__img { object-position: 84% 50%; }
-  .hr__scrim, .hr__scrim--scene { background: linear-gradient(0deg, rgba(10, 10, 10, 0.93) 0%, rgba(10, 10, 10, 0.62) 34%, rgba(10, 10, 10, 0) 64%); }
+  .hr__scrim { background: linear-gradient(0deg, rgba(10, 10, 10, 0.93) 0%, rgba(10, 10, 10, 0.62) 34%, rgba(10, 10, 10, 0) 64%); }
   .hr__copy { left: 1.25rem; right: 1.25rem; top: auto; bottom: 3.3rem; transform: none; width: auto; }
   .hr__title { font-size: clamp(2rem, 8vw, 2.9rem); margin-bottom: 1.3rem; }
   .hr__dots { left: 1.25rem; bottom: 1rem; }
-  .hx__sun--wide { display: none; }
-  .hx__sun--narrow { display: inline; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hr__track { transition: none; }
-  .hx__ridge { animation: none; }
   .hr__slide.is-active .hr__copy > * { animation: none; }
   .hr__dot.is-on i { animation: none; transform: scaleX(1); }
 }
