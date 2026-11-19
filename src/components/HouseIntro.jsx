@@ -37,8 +37,6 @@ export default function HouseIntro({ product }) {
             <span className="hi__corner hi__corner--tl" aria-hidden="true" />
             <span className="hi__corner hi__corner--br" aria-hidden="true" />
             <div className="hi__stage">
-              <span className="hi__ring" aria-hidden="true" />
-              <span className="hi__ring hi__ring--b" aria-hidden="true" />
               <AventusScene product={product} />
               <span className="hi__drag" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4" /></svg>
