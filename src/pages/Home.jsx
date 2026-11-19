@@ -1,7 +1,8 @@
 import { Fragment, useRef } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import HeroSwitcher from '../components/heroes/HeroSwitcher'
+import HeroCarousel from '../components/heroes/HeroCarousel'
+import HouseIntro from '../components/HouseIntro'
 import Divider from '../components/Divider'
 import Marquee from '../components/Marquee'
 import ProductVisual from '../components/ProductVisual'
@@ -46,9 +47,11 @@ export default function Home() {
 
   return (
     <div ref={root}>
-      <HeroSwitcher product={hero} />
+      <HeroCarousel />
 
       <Marquee />
+
+      <HouseIntro product={hero} />
 
       <section className="section pt-4">
         <Container>
