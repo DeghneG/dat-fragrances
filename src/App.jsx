@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { useLayoutEffect } from 'react'
+import { BrowserRouter, Route, Routes, useLocation, useNavigationType } from 'react-router-dom'
 import SiteNav from './components/SiteNav'
 import SiteFooter from './components/SiteFooter'
 import Home from './pages/Home'
@@ -13,11 +13,16 @@ import OrderConfirmation from './pages/OrderConfirmation'
 import NotFound from './pages/NotFound'
 import { CartProvider } from './context/CartContext'
 
+// Every link click or page change starts at the top. The jump is instant (the page has smooth scrolling on,
+// and a long animated scroll gets cut short when the new page changes height). Filter, sort and search edits
+// use "replace" navigation, so they do not yank the page back to the top.
 function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
+  const { pathname, search } = useLocation()
+  const navType = useNavigationType()
+  useLayoutEffect(() => {
+    if (navType === 'REPLACE') return
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname, search, navType])
   return null
 }
 
