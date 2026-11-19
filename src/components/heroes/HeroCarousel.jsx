@@ -58,6 +58,20 @@ const SLIDES = [
     ),
     cta: { label: 'Shop Giorgio Armani', to: '/shop?category=Designer' },
   },
+  {
+    key: 'creed',
+    tone: 'light',
+    src: '/images/hero-creed-2400.webp',
+    src1x: '/images/hero-creed-1200.webp',
+    alt: 'Creed bottles on white blocks: Aventus, Love in White, Silver Mountain Water, Green Irish Tweed, Aventus for Her, Aventus Cologne and Millésime Impérial, beside the black Creed logo.',
+    eyebrow: 'Niche',
+    title: (
+      <>
+        Made by hand <em>since 1760.</em>
+      </>
+    ),
+    cta: { label: 'Shop Creed', to: '/shop?category=Niche' },
+  },
 ]
 
 const INTERVAL = 5000
@@ -126,7 +140,7 @@ export default function HeroCarousel() {
 
   return (
     <section
-      className="hr"
+      className={`hr ${SLIDES[real].tone === 'light' ? 'is-light' : ''}`}
       aria-roledescription="carousel"
       aria-label="Featured"
       onMouseEnter={() => setPaused(true)}
@@ -153,7 +167,7 @@ export default function HeroCarousel() {
             return (
               <div
                 key={`${s.key}-${clone ? 'clone' : 'main'}`}
-                className={`hr__slide ${active ? 'is-active' : ''}`}
+                className={`hr__slide ${active ? 'is-active' : ''} ${s.tone === 'light' ? 'hr__slide--light' : ''}`}
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${(i % n) + 1} of ${n}`}

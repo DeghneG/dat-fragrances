@@ -65,6 +65,8 @@ const rows = {
     ['Creed', 'Green Irish Tweed', 'Fresh Green', 17200, '#6a9a5a', 'tall', 'Cut grass, iris and a breezy classic.', 'Lemon verbena and iris over violet leaf, finishing on ambergris and sandalwood. A long-standing green icon.', ['Lemon Verbena', 'Iris'], ['Violet Leaf'], ['Ambergris', 'Sandalwood']],
     ['Creed', 'Viking', 'Fresh Spicy', 18200, '#5a6a8a', 'block', 'Peppermint, rose and clean woods.', 'Bergamot and pink pepper over rose and lavender, with patchouli, vetiver and sandalwood underneath. Bold and fresh.', ['Bergamot', 'Pink Pepper', 'Peppermint'], ['Rose', 'Lavender'], ['Sandalwood', 'Vetiver', 'Patchouli']],
     ['Creed', 'Millésime Imperial', 'Fresh Marine', 17000, '#7ab0b8', 'flask', 'Sea salt and citrus, effortlessly rich.', 'Bergamot, lemon and mandarin over iris and a salty marine touch, resting on musk and sandalwood.', ['Bergamot', 'Lemon', 'Mandarin'], ['Iris', 'Sea Salt'], ['Musk', 'Sandalwood']],
+    ['Sospiro', 'Vibrato', 'Aromatic Woody', 14500, '#1f4a3a', 'round', 'Green velvet, bright citrus and warm woods.', 'A bright opening of citrus and herbs settles into a creamy floral heart and a smooth woody base. Dressed in deep green velvet, it feels formal and easy to wear.', ['Bergamot', 'Lemon', 'Basil'], ['Jasmine', 'Lily of the Valley'], ['Sandalwood', 'Cedar', 'Musk']],
+    ['Sospiro', 'Il Padrino', 'Warm Spicy', 14500, '#6a2a1a', 'round', 'Spice, amber and rich velvet.', 'A warm, resinous blend of spice and amber over a soft, powdery heart. Wrapped in burgundy velvet, it is built for cold evenings and slow dinners.', ['Cinnamon', 'Saffron', 'Bergamot'], ['Rose', 'Iris'], ['Amber', 'Vanilla', 'Patchouli']],
   ],
 }
 
@@ -116,6 +118,8 @@ const PHOTOS = {
   'creed-green-irish-tweed': '/images/creed-green-irish-tweed.png',
   'creed-viking': '/images/creed-viking.png',
   'creed-mill-sime-imperial': '/images/creed-mill-sime-imperial.png',
+  'sospiro-vibrato': '/images/sospiro-vibrato.png',
+  'sospiro-il-padrino': '/images/sospiro-il-padrino.png',
   'dolce-and-gabbana-light-blue': '/images/dolce-and-gabbana-light-blue.png',
   'chanel-coco-mademoiselle': '/images/chanel-coco-mademoiselle.png',
   'afnan-9pm': '/images/afnan-9pm.png',
