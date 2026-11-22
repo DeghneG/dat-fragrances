@@ -4,9 +4,9 @@ import Divider from '../components/Divider'
 import useReveal from '../hooks/useReveal'
 
 const team = [
-  { name: 'Deghne Agana', initials: 'DA', role: 'Co-founder', bio: 'Keeps the collection honest. If a bottle makes the shelf, Deghne has worn it through a full week.' },
-  { name: 'Theodore Navarro', initials: 'TN', role: 'Co-founder', bio: 'Our resident note-spotter, equally happy in a department-store aisle or a niche boutique.' },
-  { name: 'Alexander Tolosa', initials: 'AT', role: 'Co-founder', bio: 'Turns obsessive scent talk into clear product pages and a shop that is easy to browse.' },
+  { name: 'Deghne Agana', photo: '/images/team/deghne-agana.png', role: 'Co-founder', bio: 'Keeps the collection honest. If a bottle makes the shelf, Deghne has worn it through a full week.' },
+  { name: 'Theodore Navarro', photo: '/images/team/theodore-navarro.png', role: 'Co-founder', bio: 'Our resident note-spotter, equally happy in a department-store aisle or a niche boutique.' },
+  { name: 'Alexander Tolosa', photo: '/images/team/alexander-tolosa.png', role: 'Co-founder', bio: 'Turns obsessive scent talk into clear product pages and a shop that is easy to browse.' },
 ]
 
 export default function About() {
@@ -25,7 +25,7 @@ export default function About() {
           {team.map((m) => (
             <Col md={4} key={m.name} data-reveal>
               <div className="member">
-                <div className="member__mono" aria-hidden="true">{m.initials}</div>
+                <img className="member__photo" src={m.photo} alt={m.name} loading="lazy" />
                 <h2 className="member__name">{m.name}</h2>
                 <p className="member__role">{m.role}</p>
                 <p className="muted mb-0">{m.bio}</p>
