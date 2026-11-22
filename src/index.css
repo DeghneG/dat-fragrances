@@ -133,7 +133,7 @@ main { min-height: 70vh; }
 
 /* About */
 .member { border: 1px solid var(--line); padding: 2rem; height: 100%; background: var(--ink-2); }
-.member__mono { width: 4.2rem; height: 4.2rem; border: 1px solid var(--brass); display: grid; place-items: center; font-family: var(--serif); font-size: 1.6rem; color: var(--brass-hi); margin-bottom: 1.4rem; }
+.member__photo { width: 140px; height: 140px; object-fit: cover; object-position: center 20%; border: 1px solid var(--brass); display: block; margin-bottom: 1.4rem; }
 .member__name { font-size: 1.9rem; margin-bottom: 0.2rem; }
 .member__role { color: var(--brass); font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 1rem; }
 .story { padding: 4rem 0 1rem; }
