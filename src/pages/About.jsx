@@ -38,11 +38,11 @@ export default function About() {
           <h2 id="name-origin" className="nameorigin__title">What DAT stands for</h2>
           <ul className="nameorigin__letters">
             <li><span aria-hidden="true">D</span><strong>Deghne</strong></li>
-            <li><span aria-hidden="true">A</span><strong>Alex</strong></li>
+            <li><span aria-hidden="true">A</span><strong>Alexander</strong></li>
             <li><span aria-hidden="true">T</span><strong>Theodore</strong></li>
           </ul>
           <p className="muted nameorigin__note">
-            DAT stands for Deghne, Alex and Theodore, the three of us behind the shelf.
+            DAT stands for Deghne, Alexander and Theodore, the three of us behind the shelf.
           </p>
         </section>
 

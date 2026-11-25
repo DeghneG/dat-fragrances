@@ -20,6 +20,7 @@ export default function Product() {
   const product = bySlug(slug)
   const root = useRef(null)
   const [sizeIdx, setSizeIdx] = useState(0)
+  const [added, setAdded] = useState(false)
   useReveal(root, [slug])
 
   if (!product) {
@@ -80,10 +81,19 @@ export default function Product() {
                 ))}
               </div>
               <p className="product-price" data-reveal>{peso(size.price)}</p>
-              {/* layout only: does nothing when clicked */}
-              <Button type="button" className="btn-brass btn-lg-wide" data-reveal>
-                Add to Cart
+              {/* layout only: no cart is updated, just a brief label change */}
+              <Button
+                type="button"
+                className="btn-brass btn-lg-wide"
+                data-reveal
+                onClick={() => {
+                  setAdded(true)
+                  setTimeout(() => setAdded(false), 1500)
+                }}
+              >
+                {added ? 'Added ✓' : 'Add to Cart'}
               </Button>
+              <span className="visually-hidden" role="status">{added ? 'Added to cart' : ''}</span>
 
               <dl className="pyramid" data-reveal>
                 {TIERS.map(([key, label, hint]) => (
