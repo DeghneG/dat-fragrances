@@ -40,9 +40,16 @@ export default function Contact() {
             <p className="muted">Mon to Sat, 10 AM to 7 PM<br />Sunday, by appointment</p>
             <h2 className="info-head">Reach us</h2>
             <p className="muted mb-0">
-              hello@datfragrances.example<br />
-              +63 900 000 0000
+              <a href="mailto:hello@datfragrances.example">hello@datfragrances.example</a><br />
+              <a href="tel:+639000000000">+63 900 000 0000</a>
             </p>
+            <iframe
+              title="Map of DAT Fragrances Atelier in Leganes, Iloilo"
+              src="https://www.google.com/maps?q=Leganes,+Iloilo,+Philippines&output=embed"
+              className="w-100 mt-4 border-0 rounded"
+              height="220"
+              loading="lazy"
+            />
             <p className="muted small mt-4">Hypothetical contact details for a class project.</p>
           </Col>
           <Col lg={{ span: 6, offset: 1 }} data-reveal>

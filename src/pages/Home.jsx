@@ -72,6 +72,7 @@ export default function Home() {
                   <p className="feature__tag">{c.tagline}</p>
                   <p className="feature__desc">{c.description}</p>
                   <Button as={Link} to={`/shop?category=${encodeURIComponent(c.name)}`} className="btn-brass">Browse the collection</Button>
+                  <Button as={Link} to={`/shop/${p.slug}`} variant="outline-light" className="ms-2">View {p.name}</Button>
                 </Col>
               </Row>
               </Fragment>
